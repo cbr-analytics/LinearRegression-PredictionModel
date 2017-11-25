@@ -1,0 +1,43 @@
+# Predicion using Simple Linear Regression
+#Prediction model using Linear Regression
+#Objective: To predict SalesPrice of Appartments using Linear Regression model
+
+# DATASET : Boston Housing dataset
+# PREDICTION MODEL: LINEAR REGRESSION
+# Dependent variable: SalePrice
+# Independent variables: LotArea
+
+
+#Load train and test data for Linear Regression. 
+train.df<- read.csv("train.csv", header = TRUE)
+test.df<- read.csv("test.csv", header = TRUE)
+
+# Command to check number of parameters in the data frame "train.df" or "test.df"
+summary(names(train.df))
+summary(names(test.df))
+
+# Let us prepare new train and test dataframe comprising of required variables i.e. 
+# the test dataframe will have LotArea and train dataframe will have SalePrice and LotArea.
+
+train <- data.frame(SalePrice = train.df$SalePrice, LotArea = train.df$LotArea)
+test <- data.frame(LotArea = test.df$LotArea)
+
+str(train)
+summary(train$SalePrice)
+summary(train$LotArea)
+# Linear Regression
+library(ggplot2)
+#
+
+plot(SalePrice ~ LotArea, data = train)
+
+#Preparing model to get the Intercept and Coefficient
+
+model<- lm ( SalePrice ~ LotArea, data = train)
+
+summary(model)
+# Predict SalePrice using the Linear Regression Model from above and use test dataset
+PredictedSalePrice <- predict(model, test)
+
+#Write the prediction in test file
+test$SalePrice <- PredictedSalePrice
